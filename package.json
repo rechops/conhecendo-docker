@@ -1,0 +1,14 @@
+{
+  "name": "docker-training",
+  "version": "1.0.0",
+  "description": "Presentation for docker training",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodrigo Rech",
+  "license": "ISC",
+  "dependencies": {
+    "backslide": "^2.3.3"
+  }
+}
