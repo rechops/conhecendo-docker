@@ -39,7 +39,7 @@ pre, code {
   background: $code-background;
 }
 a, a:visited, a:hover, a:active { color: $text-dark; }
-img { vertical-align: inherit; }
+img { max-height: 400px; vertical-align: inherit; }
 blockquote {
   border-left: 8px solid;
   padding-left: .5em;
