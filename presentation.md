@@ -294,3 +294,20 @@ docker run --rm -p 8099:8099 --name voter-registration-web --link voter-mongo:mo
 **--name** Atribui um nome custom para o contêiner (default gera um random)
 
 **--link _list_(nome:alias)**  Adiciona uma conexão com outros contêiners
+
+Teste em: http://localhost:8099/candidates
+
+---
+
+# Limpando imagem
+
+Listar todas as imagens locais
+
+```shell
+docker images
+```
+
+Excluir uma imagem
+```shell
+docker rmi NOMEDAIMAGEM
+```
