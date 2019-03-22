@@ -86,3 +86,79 @@ class: impact
 # A Arquitetura da Aplicação
 
 .center[![VM vs Container](./imgs/arquitetura2.png)]
+
+---
+
+class: impact
+
+# Ao trabalho...
+
+---
+
+# Verifique se Docker está funcionando na sua máquina 
+
+```shell
+docker run hello-world
+```
+
+---
+
+# Docker run
+
+* O comando `docker run` inicializa um contêiner a partir de uma imagem existente (seja ela local ou de um repositório de Docker)
+
+Utilização:
+```shell
+docker run [OPÇÕES] IMAGEM [COMANDOS] [ARGUMENTOS...]
+```
+
+---
+
+# Executar MongoDB em um contêiner
+
+### Documentação
+
+https://hub.docker.com/_/mongo
+
+https://github.com/docker-library/mongo/blob/4a81205a13fefc418355248f750551e4f7c62361/3.0/Dockerfile
+
+### Execução
+
+```shell
+docker run -d -p 27017:27017 mongo
+docker ps
+```
+
+---
+
+# Docker run
+
+```shell
+docker run -d -p 27017:27017 mongo
+```
+
+**-d, --detach**  Executa um contêiner em *background* e imprime o ID do contêiner.
+
+**-p, --publish *hostPort:containerPort*** Publica a(s) porta(s) do contêiner na máquina hospedeira.
+
+---
+
+# Docker ps
+
+* O comando `docker ps` lista todos os contêiners do hospedeiro.
+
+Utilização:
+```shell
+docker ps
+```
+
+---
+
+# Uma nota sobre dockerizar banco de dados
+
+* Tenha bastante cuidado em dockerizar banco de dados
+* Docker é normalmente utilizado para aplicações sem estado
+* Quando um contêiner para, quaisquer dados armazenados nele são perdidos
+* Volumes podem ser montados junto ao Docker para persistir dados
+
+---
