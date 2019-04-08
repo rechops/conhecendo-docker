@@ -1,4 +1,4 @@
-title: Introdução a Docker
+title: Treinamento Docker
 class: animation-fade
 layout: true
 
@@ -12,28 +12,50 @@ layout: true
 class: impact
 
 # {{title}}
-## With a good subtitle :-)
+## by Rodrigo Rech
+
+---
+
+# O que é uma máquina virtual?
+
+- Máquinas virtuais (VMs) são uma **abstração de hardware físico**, transformando um servidor em vários servidores.
+- O hypervisor permite que várias VMs sejam executadas em uma única máquina.
+- Cada VM inclui **uma cópia completa de um sistema operacional**, o aplicativo, binários necessários e bibliotecas - ocupando dezenas de GBs.
+- As VMs também podem ser lentas para inicializar."_
+
+Fonte: https://www.docker.com/resources/what-container
 
 ---
 
 # O que é um contêiner?
 
-* Permite você definir e empacotar um ambiente de execução dentro de uma imagem executável.
+- Os contêineres são uma **abstração na camada de aplicação** que agrupa código e dependências.
+- Um contêiner é uma **instância de tempo de execução** de uma imagem Docker.
+- Vários contêineres podem ser executados na mesma máquina e **compartilhar o kernel** do sistema operacional com outros contêineres, cada um sendo executado como **processos isolados** no espaço do usuário.
+- Os contêineres ocupam menos espaço que as VMs (as imagens de contêiner geralmente têm dezenas/centenas de MBs), podem lidar com mais aplicativos e exigem menos VMs e sistemas operacionais._
+
+Fonte: https://www.docker.com/resources/what-container
+---
+
+# Qual é a diferença entre uma Máquina Virtual e um contêiner?
+
+.inline-block.left[![VM vs Container](./imgs/docker-containerized.png)]
+.inline-block.right[![VM vs Container](./imgs/container-vm.png)]
+
+
+Fonte: https://www.docker.com/resources/what-container
+
+---
+
+# O que é uma imagem?
+
+* Permite você definir e empacotar um ambiente de execução.
 
 * Essa image pode conter:
   * Binários de uma aplicação
   * Configurações para uma aplicação
   * Todas as suas dependências
   * Configurações de sistema (arquivos, diretórios, variáveis de ambiente, etc.)
-
----
-
-# O que é um contêiner?
-
-* Utiliza o sistema operacional para **isolar** o processo, rede e sistema de arquivo do contêiner para que aparente que seja um ambiente de servidor auto-contido
-
-* contêiners devem ser pensados como sendo **imutáveis**
- * Alterações na configuracão do contêiner deve ser manejado com redefinição e reconstrução da imagem do contêiner
 
 ---
 
@@ -44,22 +66,6 @@ class: impact
 * Criar rapidamente ambientes de desenvolvimento
 * Evitar _dependency hell_ (ex: múltiplas versões de Java/Ruby)
 * Útil para microserviços -- contêiners são menores e mais leves que VMs
-
----
-
-# Qual é a diferença entre um contêiner e uma VM?
-
-* VMs rodam seu próprio e completo sistema operacional
-* Contêiners compartilham o Kernel do sistema operacional do Host
-* Contêiners podem inicializar muito mais rápido
-* As imagens dos contêiners podem ser muito menores
-* Contêiners consumem menos recursos do sistema que uma VM
-
----
-
-# Qual é a diferença entre um contêiner e uma VM?
-
-.center[![VM vs Container](./imgs/vmVScontainer.png)]
 
 ---
 
