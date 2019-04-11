@@ -101,6 +101,21 @@ class: impact
 
 ---
 
+# Lista de afazeres
+
+1. Testar se o docker está corretamente instalado;
+2. Executar um contêiner do MongoDB expondo sua porta de conexão;
+3. Clonar o repositório da API de votação;
+4. (Opcional) Executar localmente a aplicação (requer Java 8 configurado);
+5. Escrever um Dockerfile para aplicação que construa o binário e execute a aplicação;
+6. Fazer a construção da imagem a partir do Dockerfile;
+7. Parar e eliminar o contêiner do MongoDB que foi executado;
+8. Executar um novo contêiner do MongoDB sem expor a porta de conexão;
+9. Executar o contêiner da aplicação, conectando com o contêiner do MongoDB;
+10. Limpar as imagens criadas.
+
+---
+
 # Verifique se Docker está funcionando na sua máquina 
 
 ```shell
@@ -122,13 +137,17 @@ docker run [OPÇÕES] IMAGEM [COMANDOS] [ARGUMENTOS...]
 
 # Executar MongoDB em um contêiner
 
-### Documentação
+#### Atividade
+
+2) Executar um contêiner do MongoDB expondo sua porta de conexão;
+
+#### Documentação
 
 https://hub.docker.com/_/mongo
 
 https://github.com/docker-library/mongo/blob/4a81205a13fefc418355248f750551e4f7c62361/3.0/Dockerfile
 
-### Execução
+#### Execução
 
 ```shell
 docker run -d -p 27017:27017 mongo
@@ -140,12 +159,14 @@ docker ps
 # Docker run
 
 ```shell
-docker run -d -p 27017:27017 mongo
+docker run -d -p 27017:27017 --name voter-mongo mongo
 ```
 
 **-d, --detach**  Executa um contêiner em *background* e imprime o ID do contêiner.
 
 **-p, --publish *hostPort:containerPort*** Publica a(s) porta(s) do contêiner na máquina hospedeira.
+
+**--name** Atribui um nome custom para o contêiner (default gera um random)
 
 ---
 
@@ -171,8 +192,11 @@ docker ps
 
 # Criando o artefato
 
-* Clone o repositório do sistema de votação
-* Execute localmente o artefato (Note que os testes falharão se não houver um MongoDB sendo executado)
+#### Atividade
+
+3) Clonar o repositório da API de votação;  
+4) (Opcional) Executar localmente a aplicação (requer Java 8 configurado);
+
 
 ```shell
 $ git clone --depth 1 --branch master \
@@ -184,12 +208,20 @@ $ ./gradlew clean build -x test
 
 $ java -jar build/libs/voter-service-0.2.0.jar
 ```
-
 Teste em: http://localhost:8099/candidates
 
 ---
 
-# Criando o artefato dentro do Docker
+# Criando um Dockerfile para a aplicação
+
+#### Atividade
+
+5) Escrever um Dockerfile para aplicação que construa o binário e execute a aplicação;
+
+
+#### Execução
+
+Crie um arquivo chamado `Dockerfile` com o seguinte conteúdo:
 
 ```Dockerfile
 FROM openjdk:8u181-jdk
@@ -198,10 +230,6 @@ WORKDIR /usr/local/voter-service
 RUN ./gradlew clean build -x test
 EXPOSE 8099
 CMD ["java", "-jar", "build/libs/voter-service-0.2.0.jar", "--spring.data.mongodb.host=voter-mongo"]
-```
-
-```shell
-docker build -t voter-registration/web .
 ```
 
 ---
@@ -222,6 +250,21 @@ Palavras-chaves utilizadas:
 
 ---
 
+# Contruir uma imagem para a aplicação
+
+#### Atividade
+6) Fazer a construção da imagem a partir do Dockerfile;
+
+#### Execução
+
+Dentro da pasta onde se encontra o arquivo Dockerfile execute:
+
+```shell
+docker build -t voter-registration/web .
+```
+
+
+---
 # Docker build
 
 O comando `docker build` constrói uma imagem desde um Dockerfile e um contexto. O contexto da construção é o conjunto de arquivos em um PATH ou URL de local especificado. O PATH é um diretório em seu sistema de arquivos local. O URL é um local do repositório Git.
@@ -234,7 +277,22 @@ docker build [OPÇÕES] PATH | URL | -
 **-t, --tag *nome:tag***  Nome e opcionalmente uma tag
 
 ---
+# Eliminar o contêiner MongoDB
 
+#### Atividade
+
+7) Parar e eliminar o contêiner do MongoDB que foi executado;
+
+#### Execução
+
+```shell
+docker ps
+docker kill voter-mongo
+docker ps -a
+docker rm voter-mogo
+```
+
+---
 # Docker kill
 
 Mata um ou mais contêiners que estejam sendo executados
@@ -242,12 +300,6 @@ Mata um ou mais contêiners que estejam sendo executados
 Utilização:
 ```shell
 docker kill CONTAINER ID | NOME
-```
-
-* Mate o contêiner do mongo
-```shell
-docker ps
-docker kill CONTAINER ID
 ```
 
 ---
@@ -272,6 +324,19 @@ docker rm CONTAINER ID | NOME
 
 ---
 
+# MongoDB sem porta de conexão
+
+#### Atividade
+
+8) Executar um novo contêiner do MongoDB sem expor a porta de conexão;
+
+#### Execução
+
+```shell
+docker run --rm -d --name voter-mongo mongo
+```
+
+---
 # Docker run
 
 ```shell
@@ -281,13 +346,24 @@ docker run --rm -d --name voter-mongo mongo
 
 **-d, --detach**  Executa um contêiner em *background* e imprime o ID do contêiner.
 
-**-p, --publish *hostPort:containerPort*** Publica a(s) porta(s) do contêiner na máquina hospedeira.
-
 **--name** Atribui um nome custom para o contêiner (default gera um random)
 
 ---
 
 # Docker run: conectando as coisas
+
+#### Atividade
+9) Executar o contêiner da aplicação, conectando com o contêiner do MongoDB;
+
+#### Execução
+
+```shell
+docker run --rm -p 8099:8099 --name voter-registration-web --link voter-mongo:mongo voter-registration/web
+```
+
+---
+
+# Docker run
 
 ```shell
 docker run --rm -p 8099:8099 --name voter-registration-web --link voter-mongo:mongo voter-registration/web
@@ -297,8 +373,6 @@ docker run --rm -p 8099:8099 --name voter-registration-web --link voter-mongo:mo
 
 **-p, --publish *hostPort:containerPort*** Publica a(s) porta(s) do contêiner na máquina hospedeira.
 
-**--name** Atribui um nome custom para o contêiner (default gera um random)
-
 **--link _list_(nome:alias)**  Adiciona uma conexão com outros contêiners
 
 Teste em: http://localhost:8099/candidates
@@ -307,6 +381,10 @@ Teste em: http://localhost:8099/candidates
 
 # Limpando imagem
 
+#### Atividade
+10) Limpar as imagens criadas.
+
+#### Execução
 Listar todas as imagens locais
 
 ```shell
