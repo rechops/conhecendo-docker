@@ -484,6 +484,7 @@ CMD ["sh", "-c", "java -jar ./voter-service-0.2.0.jar --spring.data.mongodb.host
 #### Execução
 
 ```shell
+docker build -t voter-registration/web .
 docker image inspect voter-registration/web:env
 docker kill voter-mongo
 docker run --rm -d --name mongodb mongo
