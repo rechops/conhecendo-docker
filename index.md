@@ -66,6 +66,8 @@ Fonte: https://www.docker.com/resources/what-container
 * Criar rapidamente ambientes de desenvolvimento
 * Evitar _dependency hell_ (ex: múltiplas versões de Java/Ruby)
 * Útil para microserviços -- contêiners são menores e mais leves que VMs
+* Viabiliza a prática de entrega contínua;
+* Permite configurar quantidade de recursos consumidos do hardware (CPU e Memória);
 
 ---
 
@@ -166,7 +168,7 @@ docker run -d -p 27017:27017 --name voter-mongo mongo
 
 **-p, --publish *hostPort:containerPort*** Publica a(s) porta(s) do contêiner na máquina hospedeira.
 
-**--name** Atribui um nome custom para o contêiner (default gera um random)
+**--name** Atribui um nome custom para o contêiner (por padrão gera um randômico)
 
 ---
 
@@ -187,6 +189,15 @@ docker ps
 * Docker é normalmente utilizado para aplicações sem estado
 * Quando um contêiner para, quaisquer dados armazenados nele são perdidos
 * Volumes podem ser montados junto ao Docker para persistir dados
+
+---
+
+# Cozinhando dados para desenvolvimento local
+
+- Como `db/seeds.rb` do Ruby, podemos ter uma base de dados em contêiner com informações pré-inicializadas para desenvolvimento local;
+- Dados para testes e cenários importantes para testar durante o desenvolvimento;
+- Ter um contêiner com dados possibilita reduzir o impacto de manter toda manutenção de um Banco de Dados na sua máquina ou na nuvem;
+- Existe um porém: requer maturidade do time em evoluir esse banco de acordo com o progresso do seu produto;
 
 ---
 
@@ -271,11 +282,12 @@ CMD ["java", "-jar", "build/libs/voter-service-0.2.0.jar", "--spring.data.mongod
 - Mantenha contêineres o mais efêmero (curta duração) possível;
 - Siga o Princípio 6 do [12 Factor App](https://12factor.net/pt_br/processes);
 - Evite incluir arquivos desnecessários. Eventualmente, use `.dockerignore`;
-- Utilize _multi-stage build_;
+- Utilize compilação em múltiplas etapas;
 - Não instale pacotes desnecessários;
 - Desacople aplicações. Um contêiner por aplicação.
 - Minimize o número de camadas;
 - Ordene seus argumentos;
+- Utilize váriaveis de ambientes para configurar sua aplicação;
 
 ---
 
@@ -424,3 +436,11 @@ Excluir uma imagem
 ```shell
 docker rmi NOMEDAIMAGEM
 ```
+---
+
+class: impact
+
+# OBRIGADO!
+## <3
+
+---
