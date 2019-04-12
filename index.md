@@ -440,7 +440,62 @@ docker rmi NOMEDAIMAGEM
 
 class: impact
 
-# OBRIGADO!
-## <3
+# Boas práticas
 
 ---
+
+# Compilação em múltiplas etapas
+
+```Dockerfile
+FROM openjdk:8u181-jdk AS builder
+COPY ./voter-service ./usr/local/voter-service
+WORKDIR /usr/local/voter-service
+RUN ./gradlew clean build -x test
+
+FROM openjdk:8u201-jre-alpine3.9
+COPY --from=builder /usr/local/voter-service/build/libs/voter-service-0.2.0.jar .
+EXPOSE 8099
+CMD ["java", "-jar", "./voter-service-0.2.0.jar", "--spring.data.mongodb.host=voter-mongo"]
+```
+
+---
+
+# Guarde configurações no ambiente
+
+* [Príncipio 3 do Twelve-Factor App](https://12factor.net/config)
+
+```Dockerfile
+FROM openjdk:8u181-jdk AS builder
+COPY ./voter-service ./usr/local/voter-service
+WORKDIR /usr/local/voter-service
+RUN ./gradlew clean build -x test
+
+FROM openjdk:8u201-jre-alpine3.9
+COPY --from=builder /usr/local/voter-service/build/libs/voter-service-0.2.0.jar .
+ENV MONGODB_HOST voter-mongo
+EXPOSE 8099
+CMD ["sh", "-c", "java -jar ./voter-service-0.2.0.jar --spring.data.mongodb.host=$MONGODB_HOST"]
+```
+
+---
+
+# Configurações no ambiente + Compilação em múltiplas etapas
+
+#### Execução
+
+```shell
+docker image inspect voter-registration/web:env
+docker kill voter-mongo
+docker run --rm -d --name mongodb mongo
+docker run --rm -p 8099:8099 --env MONGODB_HOST=mongodb --name voter-registration-web --link mongodb:mongo voter-registration/web:env
+```
+
+#### Teste
+http://localhost:8099/votes
+
+---
+
+class: impact
+
+# OBRIGADO!
+## <3
