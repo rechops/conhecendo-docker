@@ -150,7 +150,7 @@ https://github.com/docker-library/mongo/blob/4a81205a13fefc418355248f750551e4f7c
 #### Execução
 
 ```shell
-docker run -d -p 27017:27017 mongo
+docker run -d -p 27017:27017 --name voter-mongo mongo
 docker ps
 ```
 
@@ -289,7 +289,7 @@ docker build [OPÇÕES] PATH | URL | -
 docker ps
 docker kill voter-mongo
 docker ps -a
-docker rm voter-mogo
+docker rm voter-mongo
 ```
 
 ---
