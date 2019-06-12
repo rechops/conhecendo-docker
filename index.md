@@ -1,4 +1,4 @@
-title: Treinamento Docker
+title: Conhecendo Docker na Prática
 class: animation-fade
 layout: true
 

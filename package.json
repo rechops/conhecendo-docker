@@ -1,5 +1,5 @@
 {
-  "name": "docker-training",
+  "name": "docker-na-pratica",
   "version": "1.0.0",
   "description": "Presentation for docker training",
   "main": "index.js",

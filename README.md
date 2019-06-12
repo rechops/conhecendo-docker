@@ -1,2 +1,2 @@
-# treinamento-docker
-Slides e material para treinamento básico de Docker
+# Conhecendo Docker na Prática
+Slides e material para a sessão de Conhecendo Docker na prática
