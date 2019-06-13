@@ -113,6 +113,49 @@ class: impact
 .center[![Katacoda Logo](./imgs/katacoda-1.png)]
 Se você ainda não abriu o exercício, acesse [este link](https://www.katacoda.com/rodrigorech/scenarios/docker-na-pratica) e siga as instruções.
 
+---
+class: impact
+
+# Docker Registry
+
+---
+
+# Docker Registry ([Docker Hub](https://hub.docker.com/))
+
+## O que é?
+
+O Registry é uma aplicação sem estado, altamente escalável que armazena e permite distribuir imagens do Docker.
+
+## Por que usá-lo
+
+Você deve usar o Registry se quiser:
+
+- controlar rigorosamente onde suas imagens estão sendo armazenadas;
+- controlar a distribuição das suas imagens;
+- integrar armazenamento e distribuição em fluxo de desenvolvimento;
+
+---
+
+# Comandos Básicos
+
+### [Login](https://docs.docker.com/engine/reference/commandline/login/)
+
+```shell
+docker login [OPÇÕES] [SERVIDOR]
+```
+
+
+### [Puxar](https://docs.docker.com/engine/reference/commandline/pull/) uma imagem do registry
+
+```shell
+docker pull [OPÇÕES] NOME[:TAG]
+```
+
+### [Empurrar](https://docs.docker.com/engine/reference/commandline/push/) uma imagem para o registry
+
+```shell
+docker push [OPÇÕES] NOME[:TAG]
+```
 
 ---
 class: impact
