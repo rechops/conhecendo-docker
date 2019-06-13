@@ -7,7 +7,7 @@
     "build:voter": "docker build -t voter-registration/web .",
     "publish": "bs e -o docs/",
     "run:mongodb": "docker run --rm -d --name voter-mongo mongo",
-    "run:voter": "docker run --rm -p 8099:8099 --name voter-registration-web --link voter-mongo:mongo voter-registration/web",
+    "run:voter": "docker run --rm -d -p 8099:8099 --name voter-registration-web --link voter-mongo:mongo voter-registration/web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "bs serve"
   },

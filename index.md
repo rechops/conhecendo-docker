@@ -65,6 +65,12 @@ Fonte: https://www.docker.com/resources/what-container
 
 ---
 
+# O que é uma imagem?
+
+.center.responsive[![exemplo de imagem](./imgs/image.png)]
+
+---
+
 # Por que nós usaríamos contêiner?
 
 * Maior previsibilidade do estado do ambiente
@@ -114,6 +120,60 @@ class: impact
 Se você ainda não abriu o exercício, acesse [este link](https://www.katacoda.com/rodrigorech/scenarios/docker-na-pratica) e siga as instruções.
 
 ---
+class: impact
+
+# Resolvendo problemas
+
+---
+
+# Docker logs
+
+Captura os logs do contêiner:
+
+```shell
+docker logs [OPÇÕES] CONTÊINER
+```
+
+**-f, --follow**  Segue a saída dos logs do contêiner
+
+**--timestamps , -t**  Mostra marcas do tempo nos logs
+
+**--since**  Mostra logs desde a marca de tempo (ex. 2013-01-02T13:23:37) ou relativo (ex. 42m para 42 minutos)
+
+**--until**  Mostra logs antes da marca de tempo ou relativo 
+
+**--tail**  Número de linhas para mostrar desde o último log
+
+---
+
+# Docker stats
+
+Monitore os contêiners:
+
+```shell
+docker stats
+```
+
+.center.responsive[![Saida docker stats](./imgs/stats.png)]
+
+---
+
+# Docker inspect
+
+Retorna informações de baixo-nível de objetos Docker
+
+```shell
+docker inspect [OPÇÕES] NOME|ID [NOME|ID...]
+```
+**-f, --format**  Formata a saída usando [template Go](https://golang.org/pkg/text/template/)
+
+Exemplos:
+```shell
+docker inspect -f '{{.ContainerConfig.Env}}' voter-registration/web:latest 
+```
+
+---
+
 class: impact
 
 # Docker Registry
