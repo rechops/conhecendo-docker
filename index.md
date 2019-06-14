@@ -181,7 +181,7 @@ docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} ->
 
 ---
 
-# Exemplo de caso de uso para docker inspect
+# Caso de uso para docker inspect
 
 ### Server GoCD
 
