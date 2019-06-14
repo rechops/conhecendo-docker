@@ -168,9 +168,32 @@ docker inspect [OPÇÕES] NOME|ID [NOME|ID...]
 **-f, --format**  Formata a saída usando [template Go](https://golang.org/pkg/text/template/)
 
 Exemplos:
-```shell
-docker inspect -f '{{.ContainerConfig.Env}}' voter-registration/web:latest 
+.small[```shell
+docker inspect -f '{{.ContainerConfig.Env}}' voter-registration/web
 ```
+```shell
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' voter-registration-web
+```
+```shell
+docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' voter-registration-web
+```
+]
+
+---
+
+# Exemplo de caso de uso para docker inspect
+
+### Server GoCD
+
+.small[```shell
+docker run --rm -d -p8153:8153 -p8154:8154 --name gocd-server gocd/gocd-server:v19.3.0
+```]
+
+### Agente GoCD
+.small[```shell
+export GO_SERVER=https://$(docker inspect --format='{{(index (index .NetworkSettings.IPAddress))}}' gocd-server):8154/go
+docker run -d -e GO_SERVER_URL=$GO_SERVER gocd/gocd-agent-alpine-3.6:v19.3.0
+```]
 
 ---
 
